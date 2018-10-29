@@ -46,7 +46,7 @@ class GraphQL
      * @param  integer $cache
      * @return Response
      */
-    public function query( $query, $params=false, $cache=null )
+    public function query( $query, $params=false, $cache=null, $headerToken=null )
     {
         
         // query in cache?
@@ -79,6 +79,8 @@ class GraphQL
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization:'. $headerToken));
+	    
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $r = @curl_exec($ch);
         curl_close($ch);
